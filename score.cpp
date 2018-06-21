@@ -10,11 +10,11 @@ using namespace std;
 
 struct student
 {
-	string name, gender, sco;
-	double score;
+	string name, gender, score;
+	double sco;
 	bool sex;
 	student() {};
-	student(string n, string g, string s, double ss) :name(n), gender(g), sco(s), score(ss) {};
+	student(string n, string g, string s, double sc) :name(n), gender(g), score(s), sco(sc) {};
 	void dissex()
 	{
 		sex = (gender == "Female");
@@ -23,9 +23,9 @@ struct student
 
 bool cmp(student a, student b)
 {
-	if (a.score == b.score)
+	if (a.sco == b.sco)
 		return a.name < b.name;
-	return a.score > b.score;
+	return a.sco > b.sco;
 }
 
 vector<student> all, male, female;
@@ -34,7 +34,7 @@ double average(const vector<student>& stu)
 {
 	double sum = 0;
 	for (auto a : stu)
-		sum += a.score;
+		sum += a.sco;
 	return sum / double(stu.size());
 }
 
@@ -43,18 +43,18 @@ int main()
 	ifstream fin("score.csv", ios_base::in);
 	string line;
 	getline(fin, line);
-	string name, gender, sco;
+	string name, gender, score;
 
 	while (getline(fin, line))
 	{
 		stringstream sin(line);
 		getline(sin, name, ',');
 		getline(sin, gender, ',');
-		getline(sin, sco, ',');
+		getline(sin, score, ',');
 		gender.erase(0, 1);
-		sco.erase(0, 1);
-		double sc = stod(sco);
-		student tmp(name, gender, sco, sc);
+		score.erase(0, 1);
+		double sco = stod(score);
+		student tmp(name, gender, score, sco);
 		tmp.dissex();
 		if (tmp.sex)
 			female.push_back(tmp);
@@ -68,7 +68,7 @@ int main()
 	sort(all.begin(), all.end(), cmp);
 	for (auto a : all)
 	{
-		cout << a.name << " " << a.gender << " " << a.sco << endl;
+		cout << a.name << " " << a.gender << " " << a.score << endl;
 	}
 	return 0;
 }
